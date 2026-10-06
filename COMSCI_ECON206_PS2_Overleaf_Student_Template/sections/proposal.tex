@@ -1,0 +1,70 @@
+\section{Research questions and verified gap}
+Can paid correction make apps honest while keeping access open? Sycophancy studies examine assistant answers and user preferences \cite{sharma2024,cheng2026}. Other work rewards useful information and effort \cite{miller2005,witkowski2013}. I ask when user payments cover delivery costs and make honesty pay, assuming corrections can be checked (Appendix A).
+
+\textbf{Q1---Economics:} When do both apps choose honesty?\par
+\textbf{Q2---Computation:} How do demand and cost change allocation and equilibrium?\par
+\textbf{Q3---Behavior:} Will users pay for the corrections they prefer? Figure 1 connects user payments with the apps' choice to provide correction.
+
+\section{Answer to Q1: strategic incentives}
+Two apps seek profit and choose honest correction ($H$) or sycophancy ($S$) at the same time. Starting payoffs are assumed:
+\begin{center}
+\begin{tabular}{@{}lcc@{}}\toprule
+A $\backslash$ B & $H$ & $S$\\\midrule
+$H$ & $(3,3)$ & $(1,5)$\\
+$S$ & $(5,1)$ & $(4,4)$\\\bottomrule
+\end{tabular}
+\end{center}
+Both know payoffs but cannot see the other's choice. The game is static and simultaneous, with complete but imperfect information. $S$ always pays more, so the Nash equilibrium \cite{nash1950} is $SS$.
+
+Each $H$ commits one correction slot before bidding and earns price minus cost $c$. Assume delivery is enforced and user values $v_1\geq v_2\geq v_3$ are known. The extra profit from $H$ is $v_3-c-2$ against $H$, and $v_2-c-3$ against $S$. Strong values $(5,4,3)$ give $1-c$: only $HH$ for $0\leq c<1$, all pure/mixed equilibria at $c=1$, and only $SS$ above 1. Weak values $(3,2,1)$ give $SS$ for $c\geq0$ (proof in A).
+
+\textbf{Three lenses.} Game theory predicts the apps' choices. Social choice compares correction surplus $W$ (total correction value minus costs) and access $k/3$. Mechanism design uses auction payments to change what the apps earn.
+
+\section{Answer to Q2: auction and computation}
+Three users each want at most one identical slot. With fixed supply $k$, the top $k$ sealed bids win and pay the $(k+1)$st highest bid. Lower ID breaks ties. There is one round, no minimum price; losers pay zero. When utility is value minus payment, truthful bidding is weakly dominant \cite{vickrey1961,roughgarden2014}. Multiple-slot demand or shared uncertain values could change this result.
+
+The code sorts bids and checks whether changing one's choice pays more (Appendix A). Strong demand at $c=0$ gives $HH$: price 3, revenue 6, buyer utilities $(2,1,0)$, $W=9$, and access $2/3$. Weak demand gives no trade. My eight Colab code cells passed: 14,406 bid checks, four Nashpy cases, and 121 mixed-strategy pairs.
+
+\noindent\textbf{Artifacts:}
+\href{https://github.com/dku-comsci-econ206-Autumn2026/PS2-FP1-Yongzhuo-Wu}{GitHub};
+\href{https://colab.research.google.com/github/dku-comsci-econ206-Autumn2026/PS2-FP1-Yongzhuo-Wu/blob/ps2/Colab/PS2.ipynb}{Colab};
+\href{https://huggingface.co/spaces/dku-comsci-econ206-2026/AI-Sycophancy}{Hugging Face};
+\href{https://github.com/dku-comsci-econ206-Autumn2026/PS2-FP1-Yongzhuo-Wu/blob/ps2/Poster/PS2-FP1-Yongzhuo-A0-Poster.pdf}{A0 poster}.
+
+\clearpage\balance
+\section{Answer to Q3: behavior and interdisciplinary integration}
+In my October 5 reflection ($n=1$), A corrected $17\times6=112$ to 102, while B agreed with the wrong answer. I chose A, said I would pay 3 for A and 0 for B, and wrote ``I prefer honest answers.'' This was one response to one fixed example. The ``strong'' setting was an interface choice, not measured demand (F.1).
+
+Actual purchases, three-user bids, app choices, and later learning each have $n=0$. The model predicts $HH$ when demand is assumed to be $(5,4,3)$, but my reflection cannot test that market result.
+
+If users care about accuracy, they should prefer correction. However, the obvious error, the project's topic, or A's wording could also explain my choice. A future test could use similar wording, randomize answer order across checkable questions, and test later accuracy separately from liking. It could also compare stated payment with purchases using real payment. If the two differ, stated preference would be a poor demand estimate. This test has not been conducted.
+
+I therefore keep demand as an assumption. Accuracy, liking, and payment are different outcomes. One person's preference cannot tell us what three users would pay.
+
+\section{Advanced development, real-world impact, and roadmap}
+A possible use is a tutoring service with limited correction slots. Providers would report costs, educators check learning, public institutions support basic access, and independent reviewers check corrections and handle appeals. Voting could help set service priorities and include minority views, but it cannot decide whether an answer is true (Appendix C).
+
+With two slots, an equal lottery gives everyone a $2/3$ chance and expected strong-demand value 8. The auction gives value 9, but the lowest-value user gets no slot. The lottery's funding is unspecified, so better access alone does not show that apps would choose honesty. Subsidies and free basic correction also need funding. Charging for corrections could reward providers for leaving errors in basic answers. A correction log and independent appeals would help users challenge this problem.
+
+\begin{table}[H]\centering
+\caption{Ideas behind the project and next steps.}
+\begin{tabularx}{\columnwidth}{@{}p{1.6cm}Y@{}}
+\toprule \textbf{Horizon} & \textbf{Milestone and evidence}\\\midrule
+Basis & Nash equilibrium \cite{nash1950}; Vickrey auction incentives \cite{vickrey1961}.\\
+PS1 to PS2 & Use user payment instead of a regulatory reward; examine cost and access.\\
+Next test & Measure costs and compare stated payment with purchases.\\
+Longer term & Test learning, budgets, and access before offering the service.\\
+2056 & Correction services with independent checks and proven benefits.\\
+\bottomrule\end{tabularx}\end{table}
+
+\noindent\textbf{Expected 2056 Nobel Prize and Turing Award contribution statement.}
+My long-term aim is to connect incentive theory with correction algorithms that work at a larger scale. A contribution of this size would need new theory and independent evidence of better learning and access. This model shows when honesty pays under its assumptions.
+
+\subsection*{Open Science Statement}
+The project materials use the course organization repository and release label \texttt{ps2}. They include the paper source, notebook with saved outputs, dependencies, demonstration, and editable poster. Appendix A explains how to run the notebook and records my execution.
+
+\subsection*{Statement of Contribution to the UN's SDGs}
+SDG 4.4/4.5 \cite{un2026} concern skills and equal educational access. Testing these goals would require independently checked corrections, later learning, and access across different budgets. Clicks and revenue alone cannot show these benefits.
+
+\subsection*{Submission milestones}
+Deadlines (Beijing, 2026): review-ready September 27, 11:00 P.M.; symposium September 28, 2:45--5:15 P.M., IB 2050; final September 30, 11:00 P.M. Revised October 6.

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Correction services and AI sycophancy</title>
+<style>
+/* Shared semantic palette from the supplied A0 template. */
+:root{--ink:#212A33;--model:#003399;--observed:#006633;--planned:#56616B;--surface:#F4F6F7;--divider:#CFD5D9;--error:#C00000}
+*{box-sizing:border-box}body{font:17px/1.55 system-ui,sans-serif;color:var(--ink);background:#FFFFFF;margin:0}main{max-width:1060px;margin:36px auto;padding:0 24px}h1{font-size:2rem;line-height:1.2;color:var(--model)}h2{font-size:1.35rem;margin:28px 0 12px;color:var(--model)}p{margin:12px 0}section{margin:30px 0;padding-top:4px}a{color:var(--model);text-decoration:underline}button,select,input,textarea{font:inherit}button{padding:9px 15px;background:var(--model);color:#FFFFFF;border:2px solid var(--model);cursor:pointer}label{display:block;margin:12px 0;font-weight:600}select,input,textarea{display:block;margin-top:6px;padding:8px;border:1px solid var(--planned);border-radius:0;color:var(--ink);background:#FFFFFF;width:100%}textarea{font-weight:400}form{max-width:650px}.controls{display:flex;flex-wrap:wrap;gap:20px}.controls label{flex:1;min-width:215px}.scope,.model-result{border-left:4px solid var(--model);background:var(--surface);padding:12px 16px}.observed{border-left:4px solid var(--observed);padding:4px 16px}.observed h2{color:var(--observed)}.planned{border:2px dashed var(--planned);padding:4px 16px}.error{color:var(--error);font-weight:600}.table-scroll{overflow-x:auto;margin:18px 0}table{border-collapse:collapse;width:100%}th,td{text-align:left;border-bottom:1px solid var(--divider);padding:10px;vertical-align:top}thead th{color:#FFFFFF;background:var(--model)}tbody th{font-weight:600}caption{text-align:left;font-weight:600;margin-bottom:8px}pre{font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere;padding:12px;background:var(--surface)}details{margin:14px 0}summary{cursor:pointer;text-decoration:underline}footer{border-top:2px solid var(--divider);padding:6px 0 24px;margin-top:30px}small{font-size:.9rem}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible,.table-scroll:focus-visible{outline:3px solid var(--model);outline-offset:3px}input:disabled{background:var(--surface)}
+@media(max-width:600px){main{padding:0 16px;margin:24px auto}h1{font-size:1.65rem}th,td{padding:8px}table{font-size:15px}.table-scroll table{min-width:650px}.controls{gap:0}.controls label{min-width:100%}}
+
+.mobile-table-hint{display:none}
+@media(max-width:700px){.mobile-table-hint{display:block;color:#56616B}}
+</style></head>
+<body><main>
+<h1>Can correction services reduce AI sycophancy?</h1>
+<p>Two apps choose verifiable correction (H) or sycophancy (S). Each H app commits one identical correction slot. Three users each want at most one slot. All model values use hypothetical common payoff units.</p>
+<p class="scope"><strong>Evidence status:</strong> exact model calculations and one retained author self-reflection (n=1). No observed purchases, population demand estimates, live LLM outputs or measured learning effects.</p>
+
+<section aria-labelledby="incentives-heading"><h2 id="incentives-heading">1. Compare incentives and costs</h2>
+<div class="controls">
+<label for="service">Correction sales<select id="service"><option value="on">Enabled</option><option value="off">No service (baseline)</option></select></label>
+<label for="demand">Demand scenario<select id="demand"><option value="strong">Strong: values 5, 4, 3</option><option value="weak">Weak: values 3, 2, 1</option></select></label>
+<label for="cost">Delivery cost per slot<input id="cost" type="number" min="0" step="0.1" value="0" inputmode="decimal"></label>
+</div>
+<p id="model-error" class="error" role="alert"></p>
+<p>Apps choose simultaneously with complete payoff information and unobserved actions. After supply k is fixed, the top k sealed bids win and each pays the highest losing bid. Lower user ID breaks ties. There is one round, no reserve or loser payment. Each H app receives one payment minus delivery cost.</p>
+<p class="mobile-table-hint">On a narrow screen, swipe a table sideways to see every column.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Baseline payoff matrix"><table><caption>Baseline profit (A, B). Row is A's action, column is B's action.</caption><thead><tr><th scope="col">A / B</th><th scope="col">H</th><th scope="col">S</th></tr></thead><tbody><tr><th scope="row">H</th><td>(3, 3)</td><td>(1, 5)</td></tr><tr><th scope="row">S</th><td>(5, 1)</td><td>(4, 4)</td></tr></tbody></table></div>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Current payoff matrix"><table><caption>Model: current platform profits including correction sales and cost</caption><thead><tr><th scope="col">A / B</th><th scope="col">H</th><th scope="col">S</th></tr></thead><tbody id="matrix"></tbody></table></div>
+<p id="prediction" class="model-result" aria-live="polite"></p>
+<p id="threshold"></p>
+<details><summary>Why cost 1 changes the result</summary><p>Strong demand gives the H-minus-S gain 1−c against either opponent action. At c=1, A's two payoff rows coincide and B's two payoff columns coincide. Each player is indifferent against every opponent mixture. Every pair of independent mixed strategies is a Nash equilibrium. Four pure profiles are only the corners of this continuous set. Extra revenue changes behavior only through net payment.</p></details>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Auction outcomes"><table><caption>Model: fixed-supply auction outcomes, not observed transactions</caption><thead><tr><th scope="col">Slots</th><th scope="col">Winners</th><th scope="col">Price each</th><th scope="col">Revenue</th><th scope="col">Buyer utilities</th><th scope="col">Value</th><th scope="col">W=value−ck</th><th scope="col">Access</th></tr></thead><tbody id="auction"></tbody></table></div>
+<p id="supply-status"></p>
+<p><strong>Accounting:</strong> buyer utility plus auction revenue equals allocated value. Payments are transfers, so revenue is not added again to W. W measures correction surplus and excludes baseline platform profit, misleading-answer harms, learning and spillovers.</p>
+</section>
+
+<section aria-labelledby="access-heading"><h2 id="access-heading">2. Compare value and access</h2>
+<p>At fixed capacity k=2, compare truthful auction allocation with an equal lottery over the three possible winner pairs.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Allocation comparison"><table><caption>Model: equal capacity, different allocation rules</caption><thead><tr><th scope="col">Rule</th><th scope="col">Allocated value</th><th scope="col">W at current cost</th><th scope="col">Lowest-value user's access</th></tr></thead><tbody id="access-comparison"></tbody></table></div>
+<p>The lottery gives every user access probability 2/3 and sacrifices one unit of expected allocated value. Its payment and financing rules are unspecified. This allocation comparison does not establish the lottery's platform equilibrium or preserve the auction's honesty prediction.</p>
+<p><strong>Synthetic voting illustration:</strong> two users rank an accuracy-first service goal above agreement-first, and the third ranks them in reverse. A 2–1 majority selects the accuracy goal. No votes were collected. This vote does not decide factual truth. A design would retain minority input, user control, and an independent correction appeal.</p>
+</section>
+
+<section class="observed" aria-labelledby="record-heading"><h2 id="record-heading">3. Inspect the retained author record</h2>
+<p><strong>Observed: one author self-reflection, October 5, 2026.</strong> The exact item claimed “17 × 6 = 112.” A corrected the result to 102. B falsely endorsed 112. The author preferred A, stated WTP 3 for A and 0 for B, and wrote “I prefer honest answers.”</p>
+<table><caption>Matching condition and evidence boundary</caption><tbody><tr><th scope="row">Valid n</th><td>1 author self-reflection, 0 external participants</td></tr><tr><th scope="row">Prediction</th><td>If accuracy is valued and correction quality is known, prefer A to false affirmation B</td></tr><tr><th scope="row">Agreement / gap</th><td>The choice agrees for this one item. It does not test the two-app equilibrium or identify values (5,4,3).</td></tr><tr><th scope="row">Alternative explanations</th><td>Obvious error, project cues, preferred wording, hypothetical payment</td></tr><tr><th scope="row">Uncertainty</th><td>A purposive self-report is not a random sample. No population rate, confidence interval or learning effect.</td></tr></tbody></table>
+<p>The record's selected “strong” value is an interface setting. It is not observed market demand or money spent. New exercise or interface-test downloads below do not automatically enlarge this retained evidence.</p>
+<table><caption>Model predictions and untested human counterparts</caption><tbody><tr><th scope="row">Platform choices</th><td>Under the displayed baseline, known strong values (5,4,3), cost 0 and enforceable correction, the model predicts HH. Observed app choices: n=0.</td></tr><tr><th scope="row">Bids and purchases</th><td>At fixed k=2 and truthful bids (5,4,3), users 1 and 2 win at price 3, revenue 6. Observed bids or purchases: n=0. One person's stated WTP does not test this three-user game.</td></tr><tr><th scope="row">Cost boundary</th><td>Strong demand and cost 1 predict every independent mixed pair as equilibrium, with no unique supply. No firm costs or equilibrium-selection frequencies have been observed.</td></tr><tr><th scope="row">Learning</th><td>The fact 17×6=102 is checkable. Delayed learning observations: n=0. Preference does not establish a learning effect.</td></tr></tbody></table>
+<button type="button" id="download-retained">Download retained author record</button>
+<details><summary>View original JSON</summary><pre id="retained-json"></pre></details>
+</section>
+
+<section aria-labelledby="reflection-heading"><h2 id="reflection-heading">4. Complete an exploratory reflection or interface test</h2>
+<p>Example claim: “17 × 6 = 112.”</p>
+<p><strong>Response A:</strong> “Your answer is incorrect: 17 × 6 equals 102.”<br><strong>Response B:</strong> “Your answer is correct: 17 × 6 equals 112.”</p>
+<form id="reflection">
+<label for="activity">Activity<select id="activity" name="activity"><option>Self-reflection</option><option>Interface test</option></select></label>
+<label for="preference">Preferred response<select id="preference" name="preference" required><option value="">Choose</option><option>A</option><option>B</option><option>No preference</option></select></label>
+<label for="wtpA">Maximum stated willingness to pay for A (hypothetical units)<input id="wtpA" name="wtpA" type="number" min="0" step="any" required></label>
+<label for="wtpB">Maximum stated willingness to pay for B (hypothetical units)<input id="wtpB" name="wtpB" type="number" min="0" step="any" required></label>
+<label for="reason">Reason and what could change your view<textarea id="reason" name="reason" rows="3" maxlength="2000" required></textarea></label>
+<button type="submit">Download reflection</button><p id="status" role="status"></p>
+</form>
+<p>No name is requested. Entries stay in this page's memory until you download them. Reloading clears them. This page has no research server, upload function, analytics or persistent response storage. Downloading JSON is not a purchase or a classroom auction.</p>
+</section>
+
+<section class="planned" aria-labelledby="limits-heading"><h2 id="limits-heading">5. Understand the limits and proposed test</h2>
+<p>An accuracy mechanism predicts choosing correction and improved delayed factual recall. An obvious error, project cues, and response wording can also explain this choice. A discriminating design would match tone and randomize display order across several checkable items, then measure delayed accuracy separately from liking and compare stated WTP with an incentivized purchase. No participant study is scheduled here.</p>
+<p><strong>Practical case:</strong> limited tutoring correction capacity. Providers would disclose cost and verifiable delivery, educators would assess learning, public institutions could support basic correction and independent reviewers would audit errors and hear appeals. Paid access can exclude low-budget learners and reward providers for avoidable errors. Free basic correction, subsidies, a correction log and minority input are proposed protections, not deployed features. SDG 4 learning/access effects remain unmeasured.</p>
+<p>Truthful bidding assumes fixed supply, identical slots, private unit demand and quasilinear utility. Variable quality, common values, budgets, collusion and post-bid supply need a different model. The current matrices do not evaluate actual AI output or real firms.</p>
+</section>
+
+<footer><h2>Sources and project materials</h2>
+<p><a href="https://github.com/dku-comsci-econ206-Autumn2026/PS2-FP1-Yongzhuo-Wu">Course organization repository</a> · <a href="https://colab.research.google.com/github/dku-comsci-econ206-Autumn2026/PS2-FP1-Yongzhuo-Wu/blob/ps2/Colab/PS2.ipynb">Reproduce in Colab</a> · Submission release ps2.</p>
+<p><a href="https://doi.org/10.1073/pnas.36.1.48">Nash (1950)</a>, <a href="https://doi.org/10.1111/j.1540-6261.1961.tb02789.x">Vickrey (1961)</a>, <a href="https://theory.stanford.edu/~tim/w14/l/l21.pdf">Roughgarden (2014), Section 3</a>, <a href="https://openreview.net/forum?id=tvhaxkMKAn">Sharma et al. (ICLR 2024)</a>, <a href="https://doi.org/10.1126/science.aec8352">Cheng et al. (Science 2026)</a>.</p>
+<p>Peer prediction already incentivizes information and effort: <a href="https://doi.org/10.1287/mnsc.1050.0379">Miller et al. (2005)</a>, <a href="https://doi.org/10.1609/hcomp.v1i1.13089">Witkowski et al. (2013)</a>. This application assumes verified delivery and studies customer-funded supply, costs and access. The article compares methods and assumptions; it claims no new general mechanism.</p>
+<p><small>Codex assisted with the interface and documentation, September 27, 2026, and the October 6, 2026 revision. Human verification and the nine-item article AI disclosure remain separately recorded.</small></p>
+</footer></main>
+<script>
+const RETAINED = {
+  "date": "2026-10-05T14:20:54.948Z",
+  "demand": "strong",
+  "activity": "Self-reflection",
+  "preference": "A",
+  "wtpA": "3",
+  "wtpB": "0",
+  "reason": "I prefer honest answers."
+};
+const RELEASE = 'ps2';
+const $ = id => document.getElementById(id);
+const BASE = {HH:[3,3],HS:[1,5],SH:[5,1],SS:[4,4]};
+const fmt = n => Number.isInteger(n) ? n.toString() : Number(n.toPrecision(10)).toString();
+function auction(values,k,cost=0) {
+  const order=values.map((v,i)=>({v,i})).sort((a,b)=>b.v-a.v||a.i-b.i);
+  const ids=order.slice(0,k).map(x=>x.i), price=k?order[k].v:0;
+  const utilities=values.map((v,i)=>ids.includes(i)?v-price:0);
+  const value=ids.reduce((sum,i)=>sum+values[i],0);
+  return {ids,price,utilities,value,revenue:k*price,W:value-k*cost};
+}
+function model(values,cost,enabled) {
+  const payoff={};
+  for (const [p,base] of Object.entries(BASE)) {
+    const price=auction(values,[...p].filter(x=>x==='H').length,cost).price;
+    payoff[p]=base.map((v,i)=>v+(enabled&&p[i]==='H'?price-cost:0));
+  }
+  const pure=Object.keys(BASE).filter(p=>[0,1].every(i=>{
+    const other=p.slice(0,i)+(p[i]==='H'?'S':'H')+p.slice(i+1);
+    return payoff[p][i]>=payoff[other][i];
+  }));
+  return {payoff,pure};
+}
+function update() {
+  const enabled=$('service').value==='on', c=Number($('cost').value);
+  $('cost').disabled=!enabled;
+  if (enabled&&($('cost').value===''||!Number.isFinite(c)||!Number.isFinite(2*c)||c<0)) {
+    $('model-error').textContent='Enter a finite nonnegative delivery cost.';return;
+  }
+  $('model-error').textContent='';
+  const values=$('demand').value==='strong'?[5,4,3]:[3,2,1];
+  const cost=enabled?c:0,{payoff,pure}=model(values,cost,enabled);
+  $('matrix').innerHTML=['H','S'].map(a=>`<tr><th scope="row">${a}</th>${['H','S'].map(b=>`<td>(${payoff[a+b].map(fmt).join(', ')})</td>`).join('')}</tr>`).join('');
+  const boundary=enabled&&values[0]===5&&cost===1;
+  $('prediction').textContent=boundary?'Model: all four pure profiles HH, HS, SH, SS and every independent mixed-strategy pair are equilibria. Supply is not uniquely predicted.':`Model: unique pure Nash equilibrium ${pure.join(', ')}. ${pure[0]==='HH'?'Two slots are supplied.':'No correction slots are supplied.'}`;
+  $('threshold').textContent=enabled?`H-minus-S profit gain: ${fmt(values[2]-cost-2)} against H, ${fmt(values[1]-cost-3)} against S. Both must be positive for strict honesty dominance.`:'Baseline without correction sales: S strictly dominates for both apps.';
+  $('auction').innerHTML=(enabled?[0,1,2]:[0]).map(k=>{
+    const a=auction(values,k,cost);
+    return `<tr><th scope="row">${k}</th><td>${a.ids.length?a.ids.map(i=>'User '+(i+1)).join(', '):'None'}</td><td>${fmt(a.price)}</td><td>${fmt(a.revenue)}</td><td>(${a.utilities.map(fmt).join(', ')})</td><td>${fmt(a.value)}</td><td>${fmt(a.W)}</td><td>${k}/3</td></tr>`;
+  }).join('');
+  $('supply-status').textContent=boundary?'Cost-one boundary: HH gives k=2 and W=7, HS/SH give k=1 and W=4, SS gives k=0 and W=0. Mixed strategies induce lotteries over these outcomes.':`Equilibrium supply k=${enabled&&pure[0]==='HH'?2:0}. Other auction rows are conditional outcomes, not equilibrium sales or human purchases.`;
+  const auctionValue=values[0]+values[1],lotteryValue=2*values.reduce((a,b)=>a+b,0)/3;
+  $('access-comparison').innerHTML=`<tr><th scope="row">Auction, k=2</th><td>${fmt(auctionValue)}</td><td>${fmt(auctionValue-2*cost)}</td><td>0</td></tr><tr><th scope="row">Equal lottery, k=2</th><td>${fmt(lotteryValue)}</td><td>${fmt(lotteryValue-2*cost)}</td><td>2/3</td></tr>`;
+}
+function download(data,name) {
+  const blob=new Blob([JSON.stringify(data,null,2)+'\n'],{type:'application/json'}), url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+$('service').addEventListener('change',update);$('demand').addEventListener('change',update);$('cost').addEventListener('input',update);
+$('download-retained').addEventListener('click',()=>download(RETAINED,'author-reflection-original.json'));
+$('reflection').addEventListener('submit',event=>{
+ event.preventDefault();if (!event.target.reportValidity()||$('model-error').textContent) return;
+ const fields=Object.fromEntries(new FormData(event.target));
+ if (![fields.wtpA,fields.wtpB].every(x=>x!==''&&Number.isFinite(Number(x))&&Number(x)>=0)) return;
+ const test=fields.activity==='Interface test';
+ const data={date:new Date().toISOString(),release:RELEASE,record_kind:test?'interface-test':'exploratory-self-reflection',test_only:test,
+   evidence_status:'exploratory entry; not part of the retained n=1 author record',demand:$('demand').value,
+   delivery_cost:Number($('cost').value),correction_sales:$('service').value,...fields,
+   item:{claim:'17 × 6 = 112',A:'Your answer is incorrect: 17 × 6 equals 102.',B:'Your answer is correct: 17 × 6 equals 112.'},
+   publication:{repository:'https://github.com/dku-comsci-econ206-Autumn2026/PS2-FP1-Yongzhuo-Wu',release:RELEASE}};
+ download(data,test?'interface-test.json':'reflection.json');
+ $('status').textContent=test?'Interface test downloaded. It is excluded from the retained behavioral evidence.':'Exploratory reflection downloaded. This is hypothetical payment, not a purchase.';
+});
+$('retained-json').textContent=JSON.stringify(RETAINED,null,2);update();
+</script></body></html>
