@@ -1,0 +1,82 @@
+% !TeX program = xelatex
+\documentclass[sigconf,nonacm,10pt]{acmart}
+\geometry{a4paper}
+\setkeys{acmart.cls}{balance=false}
+\settopmatter{printacmref=false,printfolios=true}
+\setcopyright{none}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+\usepackage{amsmath,tabularx,array,enumitem,balance,tikz,longtable,xurl,xeCJK,placeins}
+\setCJKmainfont{FandolSong-Regular.otf}[BoldFont=FandolSong-Bold.otf]
+\setCJKsansfont{FandolHei-Regular.otf}[BoldFont=FandolHei-Bold.otf]
+\setCJKmonofont{FandolFang-Regular.otf}
+\xeCJKDeclareCharClass{Default}{"2018,"2019,"201C,"201D,"2013,"2014}
+% Match the Computer Modern text fonts in the supplied original template PDF.
+\setmathfont{latinmodern-math.otf}
+\microtypesetup{protrusion=false}
+\renewcommand{\rmdefault}{cmr}
+\renewcommand{\sfdefault}{cmss}
+\renewcommand{\ttdefault}{cmtt}
+\renewcommand{\bfdefault}{bx}
+\usepackage[OT1]{fontenc}
+\renewcommand{\encodingdefault}{OT1}
+% XeTeX may select TU around Unicode math and CJK runs. Preserve the same
+% Computer Modern metrics there rather than falling back to another family.
+\DeclareFontFamily{TU}{cmr}{}
+\DeclareFontShape{TU}{cmr}{m}{n}{<-8>cmr7<8-9>cmr8<9-10>cmr9<10-12>cmr10<12-17>cmr12<17->cmr17}{}
+\DeclareFontShape{TU}{cmr}{bx}{n}{<-10>cmbx9<10-12>cmbx10<12->cmbx12}{}
+\DeclareFontShape{TU}{cmr}{m}{it}{<-8>cmti7<8-10>cmti9<10->cmti10}{}
+\DeclareFontShape{TU}{cmr}{bx}{it}{<->cmbxti10}{}
+\DeclareFontFamily{TU}{cmss}{}
+\DeclareFontShape{TU}{cmss}{m}{n}{<-9>cmss8<9-10>cmss9<10-12>cmss10<12->cmss12}{}
+\DeclareFontShape{TU}{cmss}{bx}{n}{<->cmssbx10}{}
+\DeclareFontFamily{TU}{cmtt}{}
+\DeclareFontShape{TU}{cmtt}{m}{n}{<-9>cmtt8<9-10>cmtt9<10->cmtt10}{}
+\DeclareFontShape{TU}{cmtt}{bx}{n}{<->ssub*cmtt/m/n}{}
+\normalfont
+% Preserve ACM columns and serif family while meeting the instructor's A4 sizes.
+\let\TemplateNormalSize\normalsize
+\renewcommand{\normalsize}{\TemplateNormalSize\fontsize{10.1pt}{12.2pt}\selectfont}
+\AtBeginDocument{\normalsize}
+\renewcommand{\bibfont}{\fontsize{8pt}{9.6pt}\selectfont}
+\DeclareCaptionFont{readable}{\fontsize{9.1pt}{10.6pt}\selectfont}
+\captionsetup{font=readable}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
+\definecolor{CourseBlue}{HTML}{003399}
+\definecolor{CourseTeal}{HTML}{006633}
+\definecolor{CourseInk}{HTML}{212A33}
+\hypersetup{colorlinks=true,linkcolor=CourseBlue,citecolor=CourseTeal,urlcolor=CourseTeal}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\setlist{leftmargin=*,topsep=3pt,itemsep=2pt}
+\setlength{\emergencystretch}{3em}
+\citestyle{acmnumeric}
+\newcommand{\CourseNumber}{COMSCI/ECON 206}
+\newcommand{\CourseName}{Computational Microeconomics}
+\newcommand{\CourseSession}{Autumn 2026 Session 1}
+\newcommand{\Instructor}{Professor Luyao Zhang}
+\newcommand{\TeamCode}{FP1}
+\newcommand{\SymposiumSession}{B}
+\newcommand{\GitHubLink}{\href{https://github.com/dku-comsci-econ206-Autumn2026/PS2-FP1-Yongzhuo-Wu}{Course organization repository}}
+\newcommand{\NotebookLink}{\href{https://colab.research.google.com/github/dku-comsci-econ206-Autumn2026/PS2-FP1-Yongzhuo-Wu/blob/ps2/Colab/PS2.ipynb}{Run the notebook in Colab}}
+\newcommand{\HuggingFaceLink}{\href{https://huggingface.co/spaces/dku-comsci-econ206-2026/AI-Sycophancy}{Interactive demonstration}}
+\newcommand{\PosterLink}{\href{https://github.com/dku-comsci-econ206-Autumn2026/PS2-FP1-Yongzhuo-Wu/blob/ps2/Poster/PS2-FP1-Yongzhuo-A0-Poster.pdf}{A0 research poster}}
+\newcommand{\coursemeta}{\noindent\textbf{Submission to:} \CourseNumber{} --- \CourseName.\\
+\textbf{Course session:} \CourseSession. \textbf{Team:} \TeamCode. \textbf{Symposium:} \SymposiumSession.\\
+\textbf{Course instructor:} \Instructor. \textbf{Assignment:} PS2 collaborative research proposal.\par\smallskip}
+\title{How to Make AI Applications Reduce Sycophancy}
+\author{Yongzhuo Wu}
+\affiliation{\institution{Duke Kunshan University}\city{Kunshan}\country{China}}
+\email{yw650@duke.edu}
+\renewcommand{\shortauthors}{Team \TeamCode}
+\begin{document}
+\begin{teaserfigure}
+\captionsetup{skip=8pt}
+\centering
+\input{figures/ps2_teaser.tex}
+\caption{Paid correction links application incentives, auction revenue, and users' willingness to pay. The reflection records one author's preference; the dashed panel proposes a future test (Section 4).}
+\Description{Three panels connect platform incentives, auction payment and correction surplus, and one observed author reflection. Baseline/weak predict SS, strong cost zero HH, and strong cost one every mixed pair. The dashed future-design strip is unperformed; the author reflection does not validate market demand.}
+\label{fig:teaser}
+\end{teaserfigure}
+\maketitle\raggedbottom\coursemeta
+\input{sections/proposal}
+\input{appendices/supporting}
+\end{document}

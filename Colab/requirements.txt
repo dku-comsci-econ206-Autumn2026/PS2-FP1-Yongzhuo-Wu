@@ -1,0 +1,8 @@
+# Exact isolated-solver dependencies. Do not install into an active Colab kernel.
+# The notebook creates a pip-free venv, installs via host pip --python, and runs Nashpy in a fresh process.
+nashpy==0.0.43
+numpy==2.5.3
+scipy==1.18.1
+networkx==3.7
+deprecated==3.0.0
+wrapt==2.5.0
