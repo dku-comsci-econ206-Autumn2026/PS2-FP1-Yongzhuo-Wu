@@ -1,8 +1,10 @@
-<img width="4200" height="2971" alt="PS2-FP1-AI-Sycophancy-A0-Poster" src="https://github.com/user-attachments/assets/dbf7c280-f473-4d72-9826-4706aae3121c" />
+
 # PS2 · How to Make AI Applications Reduce Sycophancy
 
 Yongzhuo Wu · FP1 · Session B · yw650@duke.edu  
 COMSCI/ECON 206 · Professor Luyao Zhang
+
+<img width="4200" height="2971" alt="PS2-FP1-AI-Sycophancy-A0-Poster" src="https://github.com/user-attachments/assets/dbf7c280-f473-4d72-9826-4706aae3121c" />
 
 ## Reproduce the result
 
