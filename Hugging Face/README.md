@@ -1,5 +1,5 @@
 ---
-title: AI Sycophancy
+title: Paid Corrections and Funded Access
 emoji: ⚖️
 colorFrom: blue
 colorTo: green
@@ -8,27 +8,18 @@ app_file: index.html
 pinned: false
 ---
 
-# AI sycophancy and correction capacity
+# Paid Corrections and Funded Access
 
-Yongzhuo Wu · FP1 · Session B · COMSCI/ECON 206
+Yongzhuo Wu · FP1 · COMSCI/ECON 206 · Professor Luyao Zhang
 
-`index.html` is self-contained: its styles, JavaScript, and retained author record are embedded. It runs directly in a browser without a server or additional files. This Space uses the static SDK with `index.html` as its entry point.
+An interactive model of correction incentives, acceptance and access. Choose an auction, a funded lottery or the baseline game. Change demand, cost and acceptance to compare payoffs and equilibria. The correction example follows escrow release, dispute and refund. The lottery ledger separates transfers, delivery costs, reviews and the funding reserve.
 
-This static demonstration compares platform incentives under no correction service, strong/weak hypothetical demand, and delivery cost. It displays the baseline and current payoff matrices, fixed-supply auction outcomes, and an equal-lottery access comparison. At strong cost one, all pure and independent mixed-strategy pairs are equilibria.
+The Space uses the static SDK. All code and the official SDG icon are included in `index.html`; this README supplies the Space configuration. No API key or server is required. The interface simulates rules and payments and does not store participant responses. For offline access, open `index.html` in a browser.
 
-The behavioral panel retains one original author reflection: corrective A preferred to false affirmation B, stated WTP 3 versus 0. This is not a purchase, population estimate, live LLM evaluation, or measured learning effect. New exercise/test downloads do not enlarge that record. Values (5,4,3) and (3,2,1) remain scenario assumptions.
+At strong demand, q=1,c=0 gives HH; q=1,c=1 leaves every independent mixed pair as an equilibrium. At q=.7,c=0, HH and SS coexist with symmetric p(H)=2/3. Strict lottery honesty requires qt−c>3. The proposed education-access grant funds the lottery and reviews; its amounts are illustrative model inputs.
 
-## Use the demonstration
+The original October 5 reflection records one author's preference and hypothetical payment. Actual purchases, bids, external participants and learning outcomes have n=0. The proposed correctness × tone study separates factual judgment, liking, payment and delayed learning.
 
-Choose **Correction sales**, **Demand scenario**, and **Delivery cost per slot**. Inspect the matrices, predicted supply, conditional auction rows, and surplus/access comparison. **Download retained author record** exports the original JSON. The reflection form downloads a new exploratory record or interface test.
+[Project repository](https://github.com/dku-comsci-econ206-Autumn2026/PS2-FP1-Yongzhuo-Wu) · [Notebook](https://colab.research.google.com/github/dku-comsci-econ206-Autumn2026/PS2-FP1-Yongzhuo-Wu/blob/main/Colab/Final.ipynb)
 
-Entries remain in browser memory until downloaded; reloading clears them. No server, external dependency, API key, analytics, response upload, or persistent storage is used.
-
-
-## Reproduce and inspect
-
-Canonical source: [https://github.com/dku-comsci-econ206-Autumn2026/PS2-FP1-Yongzhuo-Wu](https://github.com/dku-comsci-econ206-Autumn2026/PS2-FP1-Yongzhuo-Wu), release **ps2**.  
-Notebook: [run all eight cells in Colab](https://colab.research.google.com/github/dku-comsci-econ206-Autumn2026/PS2-FP1-Yongzhuo-Wu/blob/ps2/Colab/PS2.ipynb).  
-The article gives the full ACM bibliography, proof, individual contributions, and AI-use disclosures. [Nash](https://doi.org/10.1073/pnas.36.1.48), [Vickrey](https://doi.org/10.1111/j.1540-6261.1961.tb02789.x), and [Roughgarden §3](https://theory.stanford.edu/~tim/w14/l/l21.pdf) provide the game/auction foundations. [Sharma et al.](https://openreview.net/forum?id=tvhaxkMKAn) and [Cheng et al.](https://doi.org/10.1126/science.aec8352) motivate the sycophancy question without estimating this market's demand or cost.
-
-AI assisted with the interface and documentation. The author supplied the reflection and checked the project materials. Proposed access protections and learning effects are not implemented or demonstrated.
+Foundations: [Miller, Resnick & Zeckhauser](https://doi.org/10.1287/mnsc.1050.0379), [Witkowski et al.](https://doi.org/10.1609/hcomp.v1i1.13089), and [Yuan & Zhang](https://doi.org/10.2139/ssrn.7455658). The [official UN Goal 4 targets](https://sdgs.un.org/goals/goal4) motivate the skill and access evaluations. The paper contains the full comparison, impact diagram, research roadmap and acknowledgments.
